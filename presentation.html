@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préfac - Présentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            width: 960px;
+            height: 540px;
+            background: white;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            padding: 40px 50px;
+            position: relative;
+            animation: slideIn 0.5s ease;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .color-bar {
+            width: 100%;
+            height: 8px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .green { background: #4CAF50; }
+        .yellow { background: #FFC107; }
+        .orange { background: #FF9800; }
+        .red { background: #F44336; }
+        .purple { background: #9C27B0; }
+        .blue { background: #2196F3; }
+
+        h1 {
+            font-size: 48px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: #7f8c8d;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .authors {
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            margin-top: auto;
+        }
+
+        .date {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        li {
+            font-size: 17px;
+            color: #444;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .summary {
+            margin-top: auto;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #2196F3;
+            font-size: 16px;
+            color: #555;
+            font-style: italic;
+            word-wrap: break-word;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            background: #2196F3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: #2196F3;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .feature-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #444;
+            word-wrap: break-word;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
+            max-height: calc(540px - 120px);
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .nested-list {
+            margin-top: 8px;
+            margin-left: 15px;
+        }
+
+        .nested-list li {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .small-text {
+            font-size: 13px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <div class="color-bar green"></div>
+            <h1>Préfac</h1>
+            <h2 style="text-align: center; font-size: 28px; margin-bottom: 20px;">Plateforme numérique d'accompagnement à la préparation universitaire</h2>
+            <div class="tagline">« Apprendre autrement, réussir ensemble. »</div>
+            <div class="authors">Nigtherson SANORA & Mireau-Jules SAINT-LOUIS</div>
+            <div class="date">30 octobre 2025</div>
+            <div class="slide-number">1 / 12</div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="color-bar green"></div>
+            <h2>Contexte du projet</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Expérience personnelle d'un ancien boursier confronté aux limites des préfac</li>
+                    <li>Manque d'orientation, méthodes stressantes, absence d'accompagnement</li>
+                    <li>Difficultés économiques et mobilité réduite dans le contexte actuel</li>
+                    <li>Naissance de Préfac : rendre la préparation universitaire plus accessible, interactive et adaptée aux réalités d'aujourd'hui</li>
+                </ul>
+                <div class="summary">
+                    Préfac est née d'une expérience personnelle difficile face à un système de préparation dépassé.
+                </div>
+            </div>
+            <div class="slide-number">2 / 12</div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="color-bar yellow"></div>
+            <h2>Problématique / Besoins identifiés</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Absence d'un apprentissage structuré et d'un accompagnement pédagogique réel</li>
+                    <li>Difficulté d'accès aux formations à cause des déplacements ou du contexte économique</li>
+                    <li>Nécessité d'apprendre et se préparer depuis chez soi, en toute sécurité</li>
+                    <li>Besoin d'une solution accessible et abordable</li>
+                </ul>
+                <div class="summary">
+                    Les étudiants manquent d'un cadre structuré, accessible et abordable pour se préparer efficacement à l'université.
+                </div>
+            </div>
+            <div class="slide-number">3 / 12</div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="color-bar orange"></div>
+            <h2>Objectif principal du projet</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Offrir une plateforme intuitive et facile d'accès pour la préparation aux concours universitaires</li>
+                    <li>Proposer un apprentissage structuré, interactif et motivant</li>
+                    <li>Réduire les barrières économiques et géographiques</li>
+                    <li>Renforcer l'égalité des chances grâce à un outil à fort impact social</li>
+                </ul>
+                <div class="summary">
+                    Préfac démocratise la préparation universitaire.
+                </div>
+            </div>
+            <div class="slide-number">4 / 12</div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="color-bar red"></div>
+            <h2>Description de la plateforme</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Interface intuitive et épurée</li>
+                    <li>Expérience utilisateur fluide et agréable</li>
+                    <li>Navigation simple et accessible à tous</li>
+                    <li>L'étudiant se concentre sur le contenu, pas sur la technique</li>
+                </ul>
+                <div class="summary">
+                    Une plateforme intuitive qui rend l'apprentissage simple, fluide et accessible à tous.
+                </div>
+            </div>
+            <div class="slide-number">5 / 12</div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="color-bar purple"></div>
+            <h2>Fonctionnalités clés</h2>
+            <div class="slide-content">
+                <div class="features-grid">
+                    <div class="feature-item">Création et connexion de compte sécurisée</div>
+                    <div class="feature-item">Dashboard affichant statistiques et progression</div>
+                    <div class="feature-item">Catalogue de cours avec filtres par matière et niveau</div>
+                    <div class="feature-item">Pages de cours détaillées (chapitres, leçons, notions)</div>
+                    <div class="feature-item">Quiz interactifs avec correction et score en temps réel</div>
+                    <div class="feature-item">Assistant IA pour poser des questions et obtenir de l'aide</div>
+                    <div class="feature-item">Page de profil personnel avec suivi global</div>
+                </div>
+                <div class="summary">
+                    Une plateforme complète alliant apprentissage, évaluation et accompagnement intelligent.
+                </div>
+            </div>
+            <div class="slide-number">6 / 12</div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="color-bar blue"></div>
+            <h2>Viabilité économique & impact social</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Contexte économique haïtien :</strong> contraction de l'économie, inflation élevée, forte précarité <span class="small-text">(Banque Mondiale, IMF)</span></li>
+                    <li><strong>Forte dépendance aux transferts :</strong> flux importants mais revenus moyens faibles <span class="small-text">(Trading Economics)</span></li>
+                    <li><strong>Modèle économique : freemium social</strong>
+                        <ul class="nested-list">
+                            <li>Accès gratuit aux cours et au dashboard</li>
+                            <li>Fonctions payantes : quiz avancés, assistant IA, certificats</li>
+                            <li>Tarification adaptée : abonnement faible + micropaiements</li>
+                        </ul>
+                    </li>
+                    <li><strong>Stratégies complémentaires :</strong> partenariats ONG/bailleurs, publicité non intrusive</li>
+                    <li><strong>Inclusion sociale :</strong> tarifs subventionnés pour foyers vulnérables</li>
+                </ul>
+                <div class="summary">
+                    Freemium + plans sociaux = large diffusion + revenus récurrents.
+                </div>
+            </div>
+            <div class="slide-number">7 / 12</div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="color-bar green"></div>
+            <h2>Utilisateurs cibles</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Nouveaux diplômés du secondaire</li>
+                    <li>Jeunes en préparation aux concours universitaires</li>
+                    <li>Objectif : offrir un accompagnement structuré et accessible</li>
+                    <li>Vision future : ouverture à d'autres profils (enseignants, tuteurs, autodidactes)</li>
+                </ul>
+                <div class="summary">
+                    Préfac, la passerelle numérique entre le lycée et l'université.
+                </div>
+            </div>
+            <div class="slide-number">8 / 12</div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="color-bar green"></div>
+            <h2>Architecture technique</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Architecture Full Stack : React (Frontend) / Flask (Backend) / SQLite (Base de données)</li>
+                    <li>Communication via API REST sécurisée (JWT)</li>
+                    <li>Frontend : interface dynamique et responsive</li>
+                    <li>Backend : logique métier, gestion des données et sécurité</li>
+                    <li>Base de données : stockage des cours, utilisateurs, quiz et progression</li>
+                    <li>Déploiement : Vercel (frontend) & Render (backend)</li>
+                </ul>
+                <div class="summary">
+                    Une architecture moderne et modulaire : React, Flask et SQLite pour une plateforme fluide, sécurisée et évolutive.
+                </div>
+            </div>
+            <div class="slide-number">9 / 12</div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="color-bar yellow"></div>
+            <h2>Technologies clés</h2>
+            <div class="slide-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Composant</th>
+                            <th>Technologie</th>
+                            <th>Raison du choix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Frontend</td>
+                            <td>React + Vite + Tailwind</td>
+                            <td>Interface rapide et moderne</td>
+                        </tr>
+                        <tr>
+                            <td>Backend</td>
+                            <td>Flask (Python)</td>
+                            <td>Légèreté et API REST</td>
+                        </tr>
+                        <tr>
+                            <td>Authentification</td>
+                            <td>Flask-JWT-Extended</td>
+                            <td>Sécurité et gestion sessions</td>
+                        </tr>
+                        <tr>
+                            <td>Communication</td>
+                            <td>Fetch</td>
+                            <td>Natif aux navigateurs modernes</td>
+                        </tr>
+                        <tr>
+                            <td>Base de données</td>
+                            <td>SQLite</td>
+                            <td>Simplicité et légèreté</td>
+                        </tr>
+                        <tr>
+                            <td>IA</td>
+                            <td>Groq API</td>
+                            <td>Assistant IA intelligent</td>
+                        </tr>
+                        <tr>
+                            <td>Déploiement</td>
+                            <td>Vercel / Render</td>
+                            <td>Hébergement cloud rapide</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary">
+                    Technologies modernes, légères et performantes pour une plateforme fluide.
+                </div>
+            </div>
+            <div class="slide-number">10 / 12</div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <div class="color-bar orange"></div>
+            <h2>Communication API (JWT & Fetch)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Architecture API REST sécurisée</li>
+                    <li>Authentification via JSON Web Token (JWT)</li>
+                    <li>Jeton généré à la connexion, transmis à chaque requête</li>
+                    <li>Protection des données et des pages sensibles</li>
+                    <li>Requêtes gérées par Fetch (React)</li>
+                    <li>Communication fluide avec le backend Flask</li>
+                    <li>Gestion des erreurs et de l'autorisation automatique</li>
+                    <li>Avantage : sécurité, rapidité, transparence des échanges</li>
+                </ul>
+                <div class="summary">
+                    Une communication fluide et sécurisée entre React et Flask grâce à JWT et Fetch.
+                </div>
+            </div>
+            <div class="slide-number">11 / 12</div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <div class="color-bar purple"></div>
+            <h2>Conclusion</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Préfac répond à un besoin réel : permettre à chaque étudiant d'apprendre et de se préparer efficacement, où qu'il soit.</li>
+                    <li>Le projet combine pédagogie, technologie et impact social pour accompagner la réussite académique.</li>
+                    <li>L'avenir : élargir la plateforme, intégrer plus de ressources et renforcer la dimension communautaire.</li>
+                </ul>
+                <div class="summary">
+                    Préfac, une innovation éducative au service de la réussite de tous.
+                </div>
+            </div>
+            <div class="slide-number">12 / 12</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)">◀ Précédent</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Suivant ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= slides.length) {
+                currentSlide = slides.length - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides[currentSlide].classList.add('active');
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialisation
+        showSlide(0);
+    </script>
+</body>
+</html>
